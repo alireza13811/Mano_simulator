@@ -15,3 +15,4 @@ F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-wind
 F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\Mano_simulator.pdb
 F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\Mano_simulator.genruntimeconfig.cache
 F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\ref\Mano_simulator.dll
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\Mano_simulator.Properties.Resources.resources

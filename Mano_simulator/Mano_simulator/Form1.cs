@@ -22,5 +22,10 @@ namespace Mano_simulator
         {
             this.KeyPreview = true;
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
