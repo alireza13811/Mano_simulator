@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace Mano_simulator
 {
     public partial class Form1 : Form
@@ -36,7 +38,10 @@ namespace Mano_simulator
             if(y >= 480)
             {
                 label9.Location = new Point(label9.Location.X, 78);
+                microprogramcodeText.SelectionStart = 20;
+                microprogramcodeText.ScrollToCaret();
             }
+            
         }
     }
 }
