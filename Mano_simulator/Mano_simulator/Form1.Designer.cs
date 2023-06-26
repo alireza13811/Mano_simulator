@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.microprogramcodeText = new System.Windows.Forms.RichTextBox();
             this.runButton = new System.Windows.Forms.Button();
             this.debug_button = new System.Windows.Forms.Button();
             this.stepoverButton = new System.Windows.Forms.Button();
@@ -45,30 +45,31 @@
             this.label6 = new System.Windows.Forms.Label();
             this.sbrLable = new System.Windows.Forms.Label();
             this.carLable = new System.Windows.Forms.Label();
+            this.microprogrammemmroryText = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
-            // richTextBox1
+            // microprogramcodeText
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(45, 45);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(239, 423);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            this.microprogramcodeText.Location = new System.Drawing.Point(45, 45);
+            this.microprogramcodeText.Name = "microprogramcodeText";
+            this.microprogramcodeText.Size = new System.Drawing.Size(239, 423);
+            this.microprogramcodeText.TabIndex = 0;
+            this.microprogramcodeText.Text = "";
             // 
             // runButton
             // 
-            this.runButton.Location = new System.Drawing.Point(576, 12);
+            this.runButton.Location = new System.Drawing.Point(748, 12);
             this.runButton.Name = "runButton";
             this.runButton.Size = new System.Drawing.Size(96, 29);
             this.runButton.TabIndex = 1;
             this.runButton.Text = "Run";
             this.runButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.runButton.UseVisualStyleBackColor = true;
+            this.runButton.Click += new System.EventHandler(this.runButton_Click);
             // 
             // debug_button
             // 
-            this.debug_button.Location = new System.Drawing.Point(678, 12);
+            this.debug_button.Location = new System.Drawing.Point(850, 12);
             this.debug_button.Name = "debug_button";
             this.debug_button.Size = new System.Drawing.Size(94, 29);
             this.debug_button.TabIndex = 2;
@@ -77,7 +78,7 @@
             // 
             // stepoverButton
             // 
-            this.stepoverButton.Location = new System.Drawing.Point(476, 12);
+            this.stepoverButton.Location = new System.Drawing.Point(648, 12);
             this.stepoverButton.Name = "stepoverButton";
             this.stepoverButton.Size = new System.Drawing.Size(94, 29);
             this.stepoverButton.TabIndex = 3;
@@ -86,18 +87,17 @@
             // 
             // stopButton
             // 
-            this.stopButton.Location = new System.Drawing.Point(376, 12);
+            this.stopButton.Location = new System.Drawing.Point(548, 12);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(94, 29);
             this.stopButton.TabIndex = 4;
             this.stopButton.Text = "Stop";
             this.stopButton.UseVisualStyleBackColor = true;
-            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(438, 93);
+            this.label1.Location = new System.Drawing.Point(560, 90);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 20);
             this.label1.TabIndex = 5;
@@ -106,7 +106,7 @@
             // acLable
             // 
             this.acLable.AutoSize = true;
-            this.acLable.Location = new System.Drawing.Point(479, 93);
+            this.acLable.Location = new System.Drawing.Point(601, 90);
             this.acLable.Name = "acLable";
             this.acLable.Size = new System.Drawing.Size(137, 20);
             this.acLable.TabIndex = 6;
@@ -115,17 +115,16 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(438, 133);
+            this.label2.Location = new System.Drawing.Point(560, 130);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(32, 20);
             this.label2.TabIndex = 7;
             this.label2.Text = "DR:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // drLable
             // 
             this.drLable.AutoSize = true;
-            this.drLable.Location = new System.Drawing.Point(479, 133);
+            this.drLable.Location = new System.Drawing.Point(601, 130);
             this.drLable.Name = "drLable";
             this.drLable.Size = new System.Drawing.Size(137, 20);
             this.drLable.TabIndex = 8;
@@ -134,7 +133,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(438, 172);
+            this.label3.Location = new System.Drawing.Point(560, 169);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 20);
             this.label3.TabIndex = 9;
@@ -143,7 +142,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(438, 212);
+            this.label4.Location = new System.Drawing.Point(561, 199);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(31, 20);
             this.label4.TabIndex = 10;
@@ -152,7 +151,7 @@
             // pcLable
             // 
             this.pcLable.AutoSize = true;
-            this.pcLable.Location = new System.Drawing.Point(479, 172);
+            this.pcLable.Location = new System.Drawing.Point(601, 169);
             this.pcLable.Name = "pcLable";
             this.pcLable.Size = new System.Drawing.Size(89, 20);
             this.pcLable.TabIndex = 11;
@@ -161,7 +160,7 @@
             // arLable
             // 
             this.arLable.AutoSize = true;
-            this.arLable.Location = new System.Drawing.Point(479, 212);
+            this.arLable.Location = new System.Drawing.Point(601, 199);
             this.arLable.Name = "arLable";
             this.arLable.Size = new System.Drawing.Size(89, 20);
             this.arLable.TabIndex = 12;
@@ -170,7 +169,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(435, 285);
+            this.label5.Location = new System.Drawing.Point(559, 264);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(38, 20);
             this.label5.TabIndex = 13;
@@ -179,7 +178,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(433, 251);
+            this.label6.Location = new System.Drawing.Point(559, 232);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(40, 20);
             this.label6.TabIndex = 14;
@@ -188,7 +187,7 @@
             // sbrLable
             // 
             this.sbrLable.AutoSize = true;
-            this.sbrLable.Location = new System.Drawing.Point(479, 285);
+            this.sbrLable.Location = new System.Drawing.Point(601, 264);
             this.sbrLable.Name = "sbrLable";
             this.sbrLable.Size = new System.Drawing.Size(57, 20);
             this.sbrLable.TabIndex = 15;
@@ -197,17 +196,26 @@
             // carLable
             // 
             this.carLable.AutoSize = true;
-            this.carLable.Location = new System.Drawing.Point(479, 251);
+            this.carLable.Location = new System.Drawing.Point(601, 232);
             this.carLable.Name = "carLable";
             this.carLable.Size = new System.Drawing.Size(57, 20);
             this.carLable.TabIndex = 16;
             this.carLable.Text = "000000";
             // 
+            // microprogrammemmroryText
+            // 
+            this.microprogrammemmroryText.Location = new System.Drawing.Point(315, 45);
+            this.microprogrammemmroryText.Name = "microprogrammemmroryText";
+            this.microprogrammemmroryText.Size = new System.Drawing.Size(239, 423);
+            this.microprogrammemmroryText.TabIndex = 17;
+            this.microprogrammemmroryText.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(877, 521);
+            this.ClientSize = new System.Drawing.Size(1129, 521);
+            this.Controls.Add(this.microprogrammemmroryText);
             this.Controls.Add(this.carLable);
             this.Controls.Add(this.sbrLable);
             this.Controls.Add(this.label6);
@@ -224,9 +232,11 @@
             this.Controls.Add(this.stepoverButton);
             this.Controls.Add(this.debug_button);
             this.Controls.Add(this.runButton);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.microprogramcodeText);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -234,7 +244,7 @@
 
         #endregion
 
-        private RichTextBox richTextBox1;
+        private RichTextBox microprogramcodeText;
         private Button runButton;
         private Button debug_button;
         private Button stepoverButton;
@@ -251,5 +261,6 @@
         private Label label6;
         private Label sbrLable;
         private Label carLable;
+        private RichTextBox microprogrammemmroryText;
     }
 }

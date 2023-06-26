@@ -6,20 +6,21 @@ namespace Mano_simulator
         {
             InitializeComponent();
         }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if(e.KeyCode == Keys.F5)
+            {
+                runButton.PerformClick();
+            }
+        }
+        private void runButton_Click(object sender, EventArgs e)
+        {
+            microprogramcodeText.Text = "hello its nima Zamani";
         }
 
-        private void stopButton_Click(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
+            this.KeyPreview = true;
         }
     }
 }
