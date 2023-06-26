@@ -1,0 +1,17 @@
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\bin\Debug\net6.0-windows\Mano_simulator.exe
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\bin\Debug\net6.0-windows\Mano_simulator.deps.json
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\bin\Debug\net6.0-windows\Mano_simulator.runtimeconfig.json
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\bin\Debug\net6.0-windows\Mano_simulator.dll
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\bin\Debug\net6.0-windows\Mano_simulator.pdb
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\Mano_simulator.csproj.AssemblyReference.cache
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\Mano_simulator.Form1.resources
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\Mano_simulator.csproj.GenerateResource.cache
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\Mano_simulator.GeneratedMSBuildEditorConfig.editorconfig
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\Mano_simulator.AssemblyInfoInputs.cache
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\Mano_simulator.AssemblyInfo.cs
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\Mano_simulator.csproj.CoreCompileInputs.cache
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\Mano_simulator.dll
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\refint\Mano_simulator.dll
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\Mano_simulator.pdb
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\Mano_simulator.genruntimeconfig.cache
+F:\University\Mano_simulator\Mano_simulator\Mano_simulator\obj\Debug\net6.0-windows\ref\Mano_simulator.dll
