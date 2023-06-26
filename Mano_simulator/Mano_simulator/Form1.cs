@@ -15,7 +15,7 @@ namespace Mano_simulator
         }
         private void runButton_Click(object sender, EventArgs e)
         {
-            microprogramcodeText.Text = "hello its nima Zamani";
+            microprogramcodeText.Text = microprogramcodeText.Text + "\n" + "surprise mf";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -26,6 +26,17 @@ namespace Mano_simulator
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void stepoverButton_Click(object sender, EventArgs e)
+        {
+            int y = label9.Location.Y;
+            y = y + 20;
+            label9.Location = new Point(label9.Location.X, y);
+            if(y >= 480)
+            {
+                label9.Location = new Point(label9.Location.X, 78);
+            }
         }
     }
 }

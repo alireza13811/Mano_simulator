@@ -54,6 +54,7 @@
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.howToProgrammToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label9 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,6 +94,7 @@
             this.stepoverButton.TabIndex = 3;
             this.stepoverButton.Text = "Step Over";
             this.stepoverButton.UseVisualStyleBackColor = true;
+            this.stepoverButton.Click += new System.EventHandler(this.stepoverButton_Click);
             // 
             // stopButton
             // 
@@ -285,11 +287,21 @@
             this.howToProgrammToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.howToProgrammToolStripMenuItem.Text = "&How to programm";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(0, 78);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(42, 20);
+            this.label9.TabIndex = 21;
+            this.label9.Text = "hello";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1062, 573);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.microprogrammemmroryText);
@@ -351,5 +363,6 @@
         private ToolStripMenuItem helpToolStripMenuItem1;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem howToProgrammToolStripMenuItem;
+        private Label label9;
     }
 }
