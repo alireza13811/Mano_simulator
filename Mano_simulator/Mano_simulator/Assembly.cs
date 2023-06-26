@@ -15,6 +15,8 @@ namespace Mano_simulator
         bool[] DR = new bool[16];
         bool[] AC = new bool[16];
 
+        IDictionary<string, bool[]> symbolTable = new Dictionary<string, bool[]>();
+
         // Microprogram
         bool[,] controlMemory = new bool[128,20];
         bool[] CAR = new bool[7];
