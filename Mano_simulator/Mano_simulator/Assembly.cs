@@ -62,7 +62,7 @@ namespace Mano_simulator
             }
 
             // Microprogram
-            for (int i = 0; i < 128; i++)
+            /*for (int i = 0; i < 128; i++)
             {
                 for (int j = 0; j < 20; j++)
                 {
@@ -73,7 +73,7 @@ namespace Mano_simulator
             {
                 CAR[i] = false;
                 SBR[i] = false;
-            }
+            }*/
         }
 
         public void LoadMemory(string[] lines)
@@ -91,27 +91,6 @@ namespace Mano_simulator
                     else
                     {
                         Memory[i, j] = false;
-                    }
-                }
-                i++;
-            }
-        }
-
-        public void LoadControlMemory(string[] lines)
-        {
-            int i = 0;
-            foreach (string line in lines)
-            {
-                string[] words = line.Split(' ');
-                for (int j = 0; j < 20; j++)
-                {
-                    if (words[1][j] == '1')
-                    {
-                        ControlMemory[i, j] = true;
-                    }
-                    else
-                    {
-                        ControlMemory[i, j] = false;
                     }
                 }
                 i++;
@@ -355,7 +334,7 @@ namespace Mano_simulator
         {
             for (int i = 0; i < 11; i++)
             {
-                AR[i] = DR[i];
+                AR[i] = DR[i+5];
             }
         }
 
@@ -741,6 +720,8 @@ namespace Mano_simulator
             }
         }
 
+        /*public void assembly_compile()*/
+
 
         // functions to compile the microprogram code
         public void microprogram_first_iteration(string code)
@@ -800,6 +781,11 @@ namespace Mano_simulator
                     {
                         controlMemory[LC, i] = operations[i];
                     }
+                    for(int i = operations.Length; i < microinstructions.Length - 3; i++)
+                    {
+                        controlMemory[LC, i] = "NOP";
+                    }
+
                     for(int i = 3; i < 6; i++)
                     {
                         controlMemory[LC, i] = microinstructions[i - 3];

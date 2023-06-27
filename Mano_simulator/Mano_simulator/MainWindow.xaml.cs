@@ -23,6 +23,28 @@ namespace Mano_simulator
         public MainWindow()
         {
             InitializeComponent();
+            // create a for loop to add rows to data grid
+            for (int i = 0; i < 4096; i++)
+            {
+                DataGridData data = new DataGridData();
+                data.Address = i.ToString("X");
+                data.Value = "0000";
+                dataGrid.Items.Add(data);
+            }
+
         }
+    }
+
+    // create a classs that will hold the data for the data grid
+    public class DataGridData
+    {
+        public string Address { get; set; }
+        public string Value { get; set; }
+        public DataGridData()
+        {
+
+        }
+
+
     }
 }
