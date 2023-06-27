@@ -33,6 +33,12 @@ namespace Mano_simulator
             }
 
         }
+
+        private void btnRun_Click(object sender, RoutedEventArgs e)
+        {
+            
+            Datamemmory.Items.Add("nima");
+        }
     }
 
     // create a classs that will hold the data for the data grid

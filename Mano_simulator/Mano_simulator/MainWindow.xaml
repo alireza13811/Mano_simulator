@@ -5,8 +5,97 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mano_simulator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow" Height="800" Width="1600
+        ">
+    <Grid Background="#8efacf">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Horizontal">
+            <Button x:Name="btnRun" Content="Run" Width="90" Margin="5" Height="25" Click="btnRun_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="btnStop" Content="Stop" Width="90" Margin="5" Height="25">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="btnDebug" Content="Debug" Width="90" Margin="5" Height="25" Background="Aqua">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="btnStepover" Content="Stepover" Width="90" Margin="5" Height="25" FontStyle="Italic">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+        <Menu Grid.Column="3" HorizontalAlignment="Left" Height="7" Margin="40,79,0,0" Grid.Row="1" VerticalAlignment="Top" Width="0"/>
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
+            <Label x:Name="lblappcode" Content="program" HorizontalAlignment="Center" FontSize="20"></Label>
+            <RichTextBox x:Name="txtProgramm" Margin="5" Height="600" BorderBrush="Gray" BorderThickness="2">
+                <RichTextBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </RichTextBox.Resources>
+            </RichTextBox>
+            
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+            <Label x:Name="lblappmemmory" Content="microprogram memmory" HorizontalAlignment="Center" FontSize="20"></Label>
+            <RichTextBox x:Name="txtProgrammMemmory" Margin="5" Height="600" BorderBrush="Gray" BorderThickness="2">
+                <RichTextBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </RichTextBox.Resources>
+            </RichTextBox>
+
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
+            <Label x:Name="lblmemmorry" Content="cpu memmory" HorizontalAlignment="Center" FontSize="20"></Label>
+            <Border CornerRadius="2" BorderThickness="2" Background="AliceBlue">
+                <DataGrid  x:Name="Datamemmory" AutoGenerateColumns="False" Margin="5" Height="600" BorderThickness="2" BorderBrush="Gray">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Address" Width="120"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Value" Width="400"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical">
+            <Label x:Name="lblmicroprogrammemmory" Content="microprogram memmory" HorizontalAlignment="Center" FontSize="20" ></Label>
+            <DataGrid  x:Name="Microprogrammemmory" AutoGenerateColumns="False" Margin="5" Height="600" BorderThickness="2" BorderBrush="Gray">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Address" Width="120"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Value" Width="400"></DataGridTextColumn>
+                </DataGrid.Columns>
+                <DataGrid.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="6"/>
+                    </Style>
+                </DataGrid.Resources>
+            </DataGrid>
+        </StackPanel>
     </Grid>
 </Window>
