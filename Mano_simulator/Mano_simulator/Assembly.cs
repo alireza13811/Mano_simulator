@@ -610,9 +610,10 @@ namespace Mano_simulator
         public void second_iteration(string code)
         {
             string[] lines = code.Split('\n');
-            int LC = 0;
-            string symbol;
-
+            int LC = 0, address;
+            string symbol, word="", binary;
+            string[] instructions;
+            
             foreach(string lineOfCode in lines)
             {
                 symbol = lineOfCode.Split(',')[0];
@@ -635,6 +636,47 @@ namespace Mano_simulator
                         Console.WriteLine("Error: Label not found");
                     }
                 }
+                instructions = lineOfCode.Trim().Split(" ");
+                if(instructions.Length == 3 && instructions[2] == "I") 
+                {
+                    word += "1";
+
+                }
+                else
+                {
+                    word += "0";
+                }
+                address = microprogramLabels[instructions[0]];
+                address /= 4;
+                binary = Convert.ToString(address, 2);
+                while (binary.Length < 4)
+                {
+                    binary = "0" + binary;
+                }
+                word += binary;
+
+                address = labelAddressTable[instructions[1]];
+                binary = Convert.ToString(address, 2);
+                while (binary.Length < 11)
+                {
+                    binary = "0" + binary;
+                }
+                word += binary;
+
+            
+                for(int i=0; i<16; i++)
+                {
+                    if (word[i] == '0')
+                    {
+                        memory[LC, i] = false;
+                    }
+                    else
+                    {
+                        memory[LC, i] = true;
+                    }
+                }
+
+
                 LC++;
             }
         }
@@ -781,9 +823,10 @@ namespace Mano_simulator
                     {
                         controlMemory[LC, i] = operations[i];
                     }
-                    for(int i = operations.Length; i < microinstructions.Length - 3; i++)
+                    for(int i = 0; i <  microinstructions.Length - 3; i++)
                     {
-                        controlMemory[LC, i] = "NOP";
+                        controlMemory[LC, operations.Length+i] = microinstructions[0];
+                        microinstructions = microinstructions.Skip(1).ToArray();
                     }
 
                     for(int i = 3; i < 6; i++)
