@@ -74,21 +74,10 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
             <Label x:Name="lblmemmorry" Content="cpu memmory" HorizontalAlignment="Center" FontSize="20"></Label>
-            <Border CornerRadius="2" BorderThickness="2" Background="AliceBlue">
-                <DataGrid  x:Name="Datamemmory" AutoGenerateColumns="False" Margin="5" Height="600" BorderThickness="2" BorderBrush="Gray">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Address" Width="120"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Value" Width="400"></DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Border>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical">
-            <Label x:Name="lblmicroprogrammemmory" Content="microprogram memmory" HorizontalAlignment="Center" FontSize="20" ></Label>
-            <DataGrid  x:Name="Microprogrammemmory" AutoGenerateColumns="False" Margin="5" Height="600" BorderThickness="2" BorderBrush="Gray">
+            <DataGrid  x:Name="Datamemmory" AutoGenerateColumns="False" Margin="5" Height="600" BorderThickness="2" BorderBrush="Gray">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Address" Width="120"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Value" Width="400"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Address" Width="120" Binding="{Binding Address }"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Value" Width="400" Binding="{Binding Value}"></DataGridTextColumn>
                 </DataGrid.Columns>
                 <DataGrid.Resources>
                     <Style TargetType="Border">
@@ -97,5 +86,33 @@
                 </DataGrid.Resources>
             </DataGrid>
         </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical">
+            <Label x:Name="lblmicroprogrammemmory" Content="microprogram memmory" HorizontalAlignment="Center" FontSize="20" ></Label>
+            <DataGrid  x:Name="Microprogrammemmory" AutoGenerateColumns="False" Margin="5" Height="600" BorderThickness="2" BorderBrush="Gray">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Address" Width="120" Binding="{Binding Address }"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Value" Width="400" Binding="{Binding Value}"></DataGridTextColumn>
+                </DataGrid.Columns>
+                <DataGrid.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="6"/>
+                    </Style>
+                </DataGrid.Resources>
+            </DataGrid>
+        </StackPanel>
+        <!-- add four lable to grid row2 coulmn3 in a stack pannel -->
+        <StackPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal">
+            <Label x:Name="lblacc" Content="ACC" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
+            <Label x:Name="lblpc" Content="PC" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
+            <Label x:Name="lblir" Content="IR" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
+            <Label x:Name="lblmar" Content="MAR" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
+            <Label x:Name="lblmdr" Content="MDR" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
+            <Label x:Name="lblsp" Content="SP" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
+            <Label x:Name="lbllv" Content="LV" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
+            <Label x:Name="lblcpp" Content="CPP" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
+            <Label x:Name="lbltos" Content="TOS" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
+            <Label x:Name="lblopc" Content="OPC" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
+
+
     </Grid>
 </Window>
