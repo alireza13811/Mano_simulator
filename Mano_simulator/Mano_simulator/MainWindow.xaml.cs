@@ -29,16 +29,17 @@ namespace Mano_simulator
                 DataGridData data = new DataGridData();
                 data.Address = i.ToString("X");
                 data.Value = "0000";
-                dataGrid.Items.Add(data);
+                Datamemmory.Items.Add(data);
+                
             }
-
+            
         }
-
         private void btnRun_Click(object sender, RoutedEventArgs e)
         {
-            
+
             Datamemmory.Items.Add("nima");
         }
+
     }
 
     // create a classs that will hold the data for the data grid
