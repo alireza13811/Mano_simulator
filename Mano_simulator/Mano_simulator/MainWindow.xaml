@@ -17,31 +17,32 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Horizontal">
-            <Button x:Name="btnRun" Content="Run" Width="90" Margin="5" Height="25" Click="btnRun_Click">
+            <Button x:Name="btnRun" Content="Run" Background="Aqua" Width="90" Margin="5" Height="25" Click="btnRun_Click" FontStyle="Italic" FontWeight="Bold">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="btnStop" Content="Stop" Width="90" Margin="5" Height="25">
+            <Button x:Name="btnStop" Background="Aqua" Content="Stop" Width="90" Margin="5" Height="25" FontStyle="Italic" FontWeight="Bold">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="btnDebug" Content="Debug" Width="90" Margin="5" Height="25" Background="Aqua">
+            <Button x:Name="btnDebug" Content="Debug" Width="90" Margin="5" Height="25" Background="Aqua" FontStyle="Italic" FontWeight="Bold">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="btnStepover" Content="Stepover" Width="90" Margin="5" Height="25" FontStyle="Italic">
+            <Button x:Name="btnStepover" Content="Stepover" Background="Aqua" Width="90" Margin="5" Height="25" FontStyle="Italic" FontWeight="Bold">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -51,7 +52,7 @@
         </StackPanel>
         <Menu Grid.Column="3" HorizontalAlignment="Left" Height="7" Margin="40,79,0,0" Grid.Row="1" VerticalAlignment="Top" Width="0"/>
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
-            <Label x:Name="lblappcode" Content="program" HorizontalAlignment="Center" FontSize="20"></Label>
+            <Label x:Name="lblappcode" Content="program" HorizontalAlignment="Center" FontSize="20"  FontStyle="Italic" FontWeight="Bold"></Label>
             <RichTextBox x:Name="txtProgramm" Margin="5" Height="600" BorderBrush="Gray" BorderThickness="2">
                 <RichTextBox.Resources>
                     <Style TargetType="Border">
@@ -62,7 +63,7 @@
             
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
-            <Label x:Name="lblappmemmory" Content="microprogram memmory" HorizontalAlignment="Center" FontSize="20"></Label>
+            <Label x:Name="lblappmemmory" Content="microprogram memmory" HorizontalAlignment="Center" FontSize="20" FontStyle="Italic" FontWeight="Bold"></Label>
             <RichTextBox x:Name="txtProgrammMemmory" Margin="5" Height="600" BorderBrush="Gray" BorderThickness="2">
                 <RichTextBox.Resources>
                     <Style TargetType="Border">
@@ -73,7 +74,7 @@
 
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
-            <Label x:Name="lblmemmorry" Content="cpu memmory" HorizontalAlignment="Center" FontSize="20"></Label>
+            <Label x:Name="lblmemmorry" Content="cpu memmory" HorizontalAlignment="Center" FontSize="20" FontStyle="Italic" FontWeight="Bold"></Label>
             <DataGrid  x:Name="Datamemmory" AutoGenerateColumns="False" Margin="5" Height="600" BorderThickness="2" BorderBrush="Gray">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Address" Width="120" Binding="{Binding Address }"></DataGridTextColumn>
@@ -87,7 +88,7 @@
             </DataGrid>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical">
-            <Label x:Name="lblmicroprogrammemmory" Content="microprogram memmory" HorizontalAlignment="Center" FontSize="20" ></Label>
+            <Label x:Name="lblmicroprogrammemmory" Content="microprogram memmory" HorizontalAlignment="Center" FontSize="20" FontStyle="Italic" FontWeight="Bold"></Label>
             <DataGrid  x:Name="Microprogrammemmory" AutoGenerateColumns="False" Margin="5" Height="600" BorderThickness="2" BorderBrush="Gray">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Address" Width="120" Binding="{Binding Address }"></DataGridTextColumn>
@@ -99,20 +100,47 @@
                     </Style>
                 </DataGrid.Resources>
             </DataGrid>
+       </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical">
+            <Label x:Name="lblAC" Content="AC" HorizontalAlignment="Center" FontSize="20" FontStyle="Italic" FontWeight="Bold"></Label>
         </StackPanel>
-        <!-- add four lable to grid row2 coulmn3 in a stack pannel -->
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+            <Label x:Name="lblDR" Content="DR" HorizontalAlignment="Center" FontSize="20" FontStyle="Italic" FontWeight="Bold"></Label>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical">
+            <Border Margin="95,0,95,0" Background="Aqua" CornerRadius="5"  BorderThickness="2" BorderBrush="DarkBlue">
+                <Label x:Name="lblACvalue" Content="0000000000000000" HorizontalAlignment="Center" FontSize="20" Padding="8,0,8,0"></Label>
+            </Border>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical">
+            <Border Margin="95,0,95,0" Background="Aqua" CornerRadius="5"  BorderThickness="2" BorderBrush="DarkBlue" >
+                <Label x:Name="lblDRvalue" Content="0000000000000000" HorizontalAlignment="Center" FontSize="20" Padding="8,0,8,0"></Label>
+            </Border>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal">
+            <Label x:Name="lblAR" Content="AR" VerticalAlignment="Center" FontSize="20"  Margin="100,0,0,0" FontStyle="Italic" FontWeight="Bold"></Label>
+            <Label x:Name="lblCAR" Content="CAR" HorizontalAlignment="Center" FontSize="20" Margin="120,0,0,0" FontStyle="Italic" FontWeight="Bold"></Label>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" >
+            <Border CornerRadius="5"  BorderThickness="2" BorderBrush="DarkBlue" Background="Aqua" Margin="60,0,0,0" >
+                <Label x:Name="lblARvalue" Content="0000000000" VerticalAlignment="Center" FontSize="20"    Padding="8,0,8,0"></Label>
+            </Border>
+            <Border Margin="51,0,0,0" Background="Aqua" CornerRadius="5"  BorderThickness="2" BorderBrush="DarkBlue">
+                <Label x:Name="lblCARvalue" Content="000000" HorizontalAlignment="Center" FontSize="20"  Padding="8,0,8,0" ></Label>
+            </Border>
+
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="3" Orientation="Horizontal" >
+            <Border CornerRadius="5"  BorderThickness="2" BorderBrush="DarkBlue" Background="Aqua" Margin="60,0,0,0" >
+                <Label x:Name="lblPCvalue" Content="0000000000" VerticalAlignment="Center" FontSize="20"    Padding="8,0,8,0"></Label>
+            </Border>
+            <Border Margin="51,0,0,0" Background="Aqua" CornerRadius="5"  BorderThickness="2" BorderBrush="DarkBlue">
+                <Label x:Name="lblSBRvalue" Content="000000" HorizontalAlignment="Center" FontSize="20"  Padding="8,0,8,0" ></Label>
+            </Border>
+        </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal">
-            <Label x:Name="lblacc" Content="ACC" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
-            <Label x:Name="lblpc" Content="PC" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
-            <Label x:Name="lblir" Content="IR" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
-            <Label x:Name="lblmar" Content="MAR" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
-            <Label x:Name="lblmdr" Content="MDR" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
-            <Label x:Name="lblsp" Content="SP" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
-            <Label x:Name="lbllv" Content="LV" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
-            <Label x:Name="lblcpp" Content="CPP" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
-            <Label x:Name="lbltos" Content="TOS" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
-            <Label x:Name="lblopc" Content="OPC" HorizontalAlignment="Center" FontSize="20" Width="100"></Label>
-
-
+            <Label x:Name="lblPC" Content="PC" VerticalAlignment="Center" FontSize="20"  Margin="100,0,0,0" FontStyle="Italic" FontWeight="Bold"></Label>
+            <Label x:Name="lblSBR" Content="SBR" HorizontalAlignment="Center" FontSize="20" Margin="120,0,0,0" FontStyle="Italic" FontWeight="Bold"></Label>
+        </StackPanel>
     </Grid>
 </Window>

@@ -22,6 +22,8 @@ namespace Mano_simulator
     {
         public MainWindow()
         {
+            WindowState = WindowState.Maximized;
+            
             InitializeComponent();
             // create a for loop to add rows to data grid
             for (int i = 0; i < 2048; i++)
