@@ -24,5 +24,11 @@ namespace Mano_simulator
         {
             InitializeComponent();
         }
+
+        private void btnRun_Click(object sender, RoutedEventArgs e)
+        {
+            
+            Datamemmory.Items.Add("nima");
+        }
     }
 }
