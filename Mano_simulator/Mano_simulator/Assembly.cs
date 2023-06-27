@@ -15,20 +15,28 @@ namespace Mano_simulator
         bool[] DR = new bool[16];
         bool[] AC = new bool[16];
 
-        IDictionary<string, bool[]> symbolTable = new Dictionary<string, bool[]>();
+        IDictionary<string, int> labelAddressTable = new Dictionary<string, int>();
 
         // Microprogram
-        bool[,] controlMemory = new bool[128, 20];
+        string[,] controlMemory = new string[128, 6];
         bool[] CAR = new bool[7];
         bool[] SBR = new bool[7];
         bool[] F1 = new bool[3];
+        bool[] F2 = new bool[3];
+        bool[] F3 = new bool[3];
+        bool[] CD = new bool[2];
+        bool[] BR = new bool[2];
+        bool[] AD = new bool[7];
+
+        IDictionary<string, int> microprogramLabels = new Dictionary<string, int>();
+        
 
         public bool[,] Memory { get => memory; set => memory = value; }
         public bool[] AR1 { get => AR; set => AR = value; }
         public bool[] PC1 { get => PC; set => PC = value; }
         public bool[] DR1 { get => DR; set => DR = value; }
         public bool[] AC1 { get => AC; set => AC = value; }
-        public bool[,] ControlMemory { get => controlMemory; set => controlMemory = value; }
+        public string[,] ControlMemory { get => controlMemory; set => controlMemory = value; }
         public bool[] CAR1 { get => CAR; set => CAR = value; }
         public bool[] SBR1 { get => SBR; set => SBR = value; }
 
@@ -581,6 +589,225 @@ namespace Mano_simulator
 
         }
 
+        public void NOP()
+        {
+            // Do nothing
+        }
+
+        // functions to compile the assembly code
+        // first iteration to create label address table
+        public void first_iteration(string code)
+        {
+            string[] linesOfCode = code.Split('\n');
+            int LC = 0;
+            string symbol;
+            foreach(string lineOfCode in linesOfCode)
+            {
+                symbol = lineOfCode.Split(',')[0];
+                if(symbol == "ORG")
+                {
+                    LC = int.Parse(lineOfCode.Split(',')[1]);
+                }
+                else if(symbol == "END")
+                {
+                    break;
+                }
+                else if (symbol != "")
+                {
+                    if (labelAddressTable.ContainsKey(symbol))
+                    {
+                        Console.WriteLine("Error: Duplicate label");
+                    }
+                    else
+                    {
+                        labelAddressTable.Add(symbol, LC);
+                    }
+                }
+                LC++;
+            }
+        }
+
+        // second iteration to compile code to binary using label address table and store in memory
+        public void second_iteration(string code)
+        {
+            string[] lines = code.Split('\n');
+            int LC = 0;
+            string symbol;
+
+            foreach(string lineOfCode in lines)
+            {
+                symbol = lineOfCode.Split(',')[0];
+                if(symbol == "ORG")
+                {
+                    LC = int.Parse(lineOfCode.Split(',')[1]);
+                }
+                else if(symbol == "END")
+                {
+                    break;
+                }
+                else if(symbol != "")
+                {
+                    if (labelAddressTable.ContainsKey(symbol))
+                    {
+                        storing_label_in_memory(LC, lineOfCode);   
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error: Label not found");
+                    }
+                }
+                LC++;
+            }
+        }
+
+        public void storing_label_in_memory(int LC, string lineOfCode)
+        {
+            string value = lineOfCode.Split(',')[1].Trim();
+            string type = value.Split(' ')[0];
+            string operand = value.Split(' ')[1];
+            if (type == "DEC")
+            {
+                int dec = int.Parse(operand);
+                string binary = Convert.ToString(dec, 2);
+                while (binary.Length < 16)
+                {
+                    binary = "0" + binary;
+                }
+                for (int i = 0; i < 16; i++)
+                {
+                    if (binary[i] == '0')
+                    {
+                        memory[LC, i] = false;
+                    }
+                    else
+                    {
+                        memory[LC, i] = true;
+                    }
+                }
+            }
+            else if (type == "HEX")
+            {
+                int dec = int.Parse(operand, System.Globalization.NumberStyles.HexNumber);
+                string binary = Convert.ToString(dec, 2);
+                while (binary.Length < 16)
+                {
+                    binary = "0" + binary;
+                }
+                for (int i = 0; i < 16; i++)
+                {
+                    if (binary[i] == '0')
+                    {
+                        memory[LC, i] = false;
+                    }
+                    else
+                    {
+                        memory[LC, i] = true;
+                    }
+                }
+            }
+            else if (type == "BIN")
+            {
+                string binary = operand;
+                while (binary.Length < 16)
+                {
+                    binary = "0" + binary;
+                }
+                for (int i = 0; i < 16; i++)
+                {
+                    if (binary[i] == '0')
+                    {
+                        memory[LC, i] = false;
+                    }
+                    else
+                    {
+                        memory[LC, i] = true;
+                    }
+                }
+            }
+            else if (type == "CHAR")
+            {
+                char[] charArray = operand.ToCharArray();
+                for (int i = 0; i < 16; i++)
+                {
+                    if (charArray[i] == '0')
+                    {
+                        memory[LC, i] = false;
+                    }
+                    else
+                    {
+                        memory[LC, i] = true;
+                    }
+                }
+            }
+        }
+
+
+        // functions to compile the microprogram code
+        public void microprogram_first_iteration(string code)
+        {
+            string[] lines = code.Split('\n');
+            int LC = 0;
+            string symbol;
+            string[] symbols;
+            foreach(string line in lines)
+            {
+                symbol = line.Split(' ')[0];
+                if(symbol == "ORG")
+                {
+                    LC = int.Parse(line.Split(' ')[1]);
+                }
+                else if(symbol == "END")
+                {
+                    break;
+                }
+
+                symbols = line.Split(':');
+                if(symbols.Length > 1)
+                {
+                    if (labelAddressTable.ContainsKey(symbols[0]))
+                    {
+                        Console.WriteLine("Error: Duplicate label");
+                    }
+                    else
+                    {
+                        microprogramLabels.Add(symbols[0], LC);
+                    }
+                }
+                LC++;
+            }
+        }
+
+        public void microprogram_second_iteration(string code)
+        {
+            string[] lines = code.Split('\n');
+            int LC = 0;
+            string[] symbols, microinstructions, operations;
+
+            foreach(string line in lines)
+            {
+                symbols = line.Split(':');
+                if(symbols.Length > 1)
+                {
+                    LC = microprogramLabels[symbols[0]];
+                    symbols = symbols.Skip(1).ToArray();
+                }
+                if (symbols[0].Split(' ').Length > 2)
+                {
+                    microinstructions = symbols[0].Split(' ');
+                    operations = microinstructions[0].Split(',');
+                    microinstructions = microinstructions.Skip(1).ToArray();
+                    for(int i = 0; i < operations.Length; i++)
+                    {
+                        controlMemory[LC, i] = operations[i];
+                    }
+                    for(int i = 3; i < 6; i++)
+                    {
+                        controlMemory[LC, i] = microinstructions[i - 3];
+                    }
+
+                }
+            }
+        }
 
     }
 
