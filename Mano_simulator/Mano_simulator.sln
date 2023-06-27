@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mano_simulator", "Mano_simulator\Mano_simulator.csproj", "{72CE902C-A737-43DB-A4DE-CFE331C0E379}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mano_simulator", "Mano_simulator\Mano_simulator.csproj", "{13B5D1DA-298E-4E4D-89C0-7C1DE4ADD689}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{72CE902C-A737-43DB-A4DE-CFE331C0E379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72CE902C-A737-43DB-A4DE-CFE331C0E379}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72CE902C-A737-43DB-A4DE-CFE331C0E379}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72CE902C-A737-43DB-A4DE-CFE331C0E379}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13B5D1DA-298E-4E4D-89C0-7C1DE4ADD689}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13B5D1DA-298E-4E4D-89C0-7C1DE4ADD689}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13B5D1DA-298E-4E4D-89C0-7C1DE4ADD689}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13B5D1DA-298E-4E4D-89C0-7C1DE4ADD689}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E7D35C4E-12F8-445D-B16B-4CE9AE750999}
+		SolutionGuid = {1FB7B198-DB43-4BAD-AD0F-060C89B3AA7B}
 	EndGlobalSection
 EndGlobal
