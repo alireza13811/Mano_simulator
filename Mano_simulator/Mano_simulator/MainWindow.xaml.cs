@@ -138,6 +138,14 @@ namespace Mano_simulator
                 address += Convert.ToInt32(assembly.PC[i]) * (int)Math.Pow(2, 10-i); 
             }
             HighlightRowDatamemmory(address);
+
+            address = 0;
+            for (int i = 0; i < 7; i++)
+            {
+                address += Convert.ToInt32(assembly.CAR[i]) * (int)Math.Pow(2, 6 - i);
+            }
+            HighlightRowMictoprogrammemmory(address);
+
             update_registers();
         }
 
