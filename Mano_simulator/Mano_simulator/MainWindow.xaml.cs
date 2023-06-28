@@ -99,12 +99,24 @@ namespace Mano_simulator
             }
             return result;
         }
-        private void HighlightRow(int rowIndex)
+        private void HighlightRowDatamemmory(int rowIndex)
         {
             if (rowIndex >= 0 && rowIndex < Datamemmory.Items.Count)
             {
                 // Get the row container for the specified index
                 DataGridRow row = (DataGridRow)Datamemmory.ItemContainerGenerator.ContainerFromIndex(rowIndex);
+
+                // Set the background color of the row
+                row.Background = Brushes.Yellow;
+            }
+        }
+
+        private void HighlightRowMictoprogrammemmory(int rowIndex)
+        {
+            if (rowIndex >= 0 && rowIndex < Microprogrammemmory.Items.Count)
+            {
+                // Get the row container for the specified index
+                DataGridRow row = (DataGridRow)Microprogrammemmory.ItemContainerGenerator.ContainerFromIndex(rowIndex);
 
                 // Set the background color of the row
                 row.Background = Brushes.Yellow;
@@ -125,7 +137,7 @@ namespace Mano_simulator
             {
                 address += Convert.ToInt32(assembly.PC[i]) * (int)Math.Pow(2, 10-i); 
             }
-            HighlightRow(address);
+            HighlightRowDatamemmory(address);
             update_registers();
         }
 
