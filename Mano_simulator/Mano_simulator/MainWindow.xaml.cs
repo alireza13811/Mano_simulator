@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace Mano_simulator
 {
     /// <summary>
@@ -20,11 +21,17 @@ namespace Mano_simulator
     /// </summary>
     public partial class MainWindow : Window
     {
+        Assembly assembly = new Assembly();
+
         public MainWindow()
         {
             WindowState = WindowState.Maximized;
             
             InitializeComponent();
+
+            WindowState = WindowState.Maximized;
+           
+
             // create a for loop to add rows to data grid
             for (int i = 0; i < 2048; i++)
             {
@@ -46,8 +53,59 @@ namespace Mano_simulator
         }
         private void btnRun_Click(object sender, RoutedEventArgs e)
         {
+            
+            string program = new TextRange(txtProgrammMemmory.Document.ContentStart, txtProgrammMemmory.Document.ContentEnd).Text;
+            assembly.microprogram_first_iteration(program);
+            assembly.microprogram_second_iteration(program);
 
-            Datamemmory.Items.Add("nima");
+            string program2 = new TextRange(txtProgramm.Document.ContentStart, txtProgramm.Document.ContentEnd).Text;
+            assembly.first_iteration(program2);
+            assembly.second_iteration(program2);
+
+            // update the data grid
+            for (int i = 0; i < 2048; i++)
+            {
+                DataGridData data = new DataGridData();
+                data.Address = "0x" + i.ToString("X");
+                // convert memory array to string of 16 bits
+                data.Value =Convert.ToInt32(assembly.memory[i,0]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 1]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 2]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 3]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 4]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 5]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 6]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 7]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 8]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 9]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 10]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 11]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 12]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 13]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 14]).ToString() + " " +
+                    Convert.ToInt32(assembly.memory[i, 15]).ToString();
+
+                Datamemmory.Items[i] = data;
+
+            }
+
+            // update the microprogram data grid
+            for (int i = 0; i < 128; i++)
+            {
+                DataGridData data = new DataGridData();
+                data.Address = "0x" + i.ToString("X");
+                // convert memory array to string of 16 bits
+                data.Value = assembly.controlMemory[i, 0] + " " +
+                    assembly.controlMemory[i, 1]+ " " +
+                    assembly.controlMemory[i, 2] + " " +
+                    assembly.controlMemory[i, 3] + " " +
+                    assembly.controlMemory[i, 4] + " " +
+                    assembly.controlMemory[i, 5];
+
+                Microprogrammemmory.Items[i] = data;
+
+            }
+
         }
 
     }

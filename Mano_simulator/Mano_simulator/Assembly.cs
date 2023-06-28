@@ -9,7 +9,7 @@ namespace Mano_simulator
     internal class Assembly
     {
         // Main
-        bool[,] memory = new bool[2096, 16];
+        public bool[,] memory = new bool[2096, 16];
         bool[] AR = new bool[11];
         bool[] PC = new bool[11];
         bool[] DR = new bool[16];
@@ -18,7 +18,7 @@ namespace Mano_simulator
         IDictionary<string, int> labelAddressTable = new Dictionary<string, int>();
 
         // Microprogram
-        string[,] controlMemory = new string[128, 6];
+        public string[,] controlMemory = new string[128, 6];
         bool[] CAR = new bool[7];
         bool[] SBR = new bool[7];
         bool[] F1 = new bool[3];
@@ -580,19 +580,23 @@ namespace Mano_simulator
             string[] linesOfCode = code.Split('\n');
             int LC = 0;
             string symbol;
+            string[] symbols;
             foreach(string lineOfCode in linesOfCode)
             {
-                symbol = lineOfCode.Split(',')[0];
+                symbol = lineOfCode.Split(' ')[0].Trim();
                 if(symbol == "ORG")
                 {
-                    LC = int.Parse(lineOfCode.Split(',')[1]);
+                    LC = int.Parse(lineOfCode.Split(' ')[1]);
+                    continue;
                 }
-                else if(symbol == "END")
+                else if(symbol.Length>2 && symbol.Substring(0,3) == "END")
                 {
                     break;
                 }
-                else if (symbol != "")
+                symbols = lineOfCode.Split(',');
+                if (symbols.Length > 1)
                 {
+                    symbol = symbols[0];
                     if (labelAddressTable.ContainsKey(symbol))
                     {
                         Console.WriteLine("Error: Duplicate label");
@@ -611,31 +615,43 @@ namespace Mano_simulator
         {
             string[] lines = code.Split('\n');
             int LC = 0, address;
-            string symbol, word="", binary;
-            string[] instructions;
+            string symbol, word="", binary, value;
+            string[] instructions, symbols;
             
             foreach(string lineOfCode in lines)
             {
-                symbol = lineOfCode.Split(',')[0];
+                symbol = lineOfCode.Split(' ')[0].Trim();
                 if(symbol == "ORG")
                 {
-                    LC = int.Parse(lineOfCode.Split(',')[1]);
+                    LC = int.Parse(lineOfCode.Split(' ')[1]);
+                    continue;
                 }
-                else if(symbol == "END")
+                else if(symbol == "HEX" || symbol == "DEC" || symbol == "BIN")
+                {
+                    storing_label_in_memory(LC, lineOfCode.Trim());
+                    continue;
+                }
+                else if(symbol.Length > 2 && symbol.Substring(0, 3) == "END")
                 {
                     break;
                 }
-                else if(symbol != "")
+
+                symbols = lineOfCode.Split(',');
+                if(symbols.Length > 1)
                 {
+                    symbol = symbols[0];
                     if (labelAddressTable.ContainsKey(symbol))
                     {
-                        storing_label_in_memory(LC, lineOfCode);   
+                        value = lineOfCode.Split(',')[1].Trim();
+                        storing_label_in_memory(LC, value);   
                     }
                     else
                     {
                         Console.WriteLine("Error: Label not found");
                     }
+                    continue;
                 }
+                word = "";
                 instructions = lineOfCode.Trim().Split(" ");
                 if(instructions.Length == 3 && instructions[2] == "I") 
                 {
@@ -681,9 +697,8 @@ namespace Mano_simulator
             }
         }
 
-        public void storing_label_in_memory(int LC, string lineOfCode)
+        public void storing_label_in_memory(int LC, string value)
         {
-            string value = lineOfCode.Split(',')[1].Trim();
             string type = value.Split(' ')[0];
             string operand = value.Split(' ')[1];
             if (type == "DEC")
@@ -778,8 +793,9 @@ namespace Mano_simulator
                 if(symbol == "ORG")
                 {
                     LC = int.Parse(line.Split(' ')[1]);
+                    continue;
                 }
-                else if(symbol == "END")
+                else if(symbol.Length > 2 && symbol.Substring(0, 3) == "END")
                 {
                     break;
                 }
@@ -829,12 +845,13 @@ namespace Mano_simulator
                         microinstructions = microinstructions.Skip(1).ToArray();
                     }
 
-                    for(int i = 3; i < 6; i++)
+                    for(int i = 3; i < microinstructions.Length + 3; i++)
                     {
                         controlMemory[LC, i] = microinstructions[i - 3];
                     }
 
                 }
+                LC++;
             }
         }
 
