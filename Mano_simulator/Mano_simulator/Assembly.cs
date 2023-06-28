@@ -938,13 +938,13 @@ namespace Mano_simulator
             }
         }
 
-        public void run(string code)
+        public int process(string code)
         {
             string[] lines = code.Split('\n');
             string pc = "";
-            foreach(string line in lines)
+            foreach (string line in lines)
             {
-                if(line.Split(' ')[0] == "ORG")
+                if (line.Split(' ')[0] == "ORG")
                 {
                     pc = line.Split(' ')[1];
                 }
@@ -965,18 +965,22 @@ namespace Mano_simulator
                 binary = "0" + binary;
             }
             LoadCAR(binary);
-
-            bool halt = false;
-            while (!halt)
+            return dec;
+        }
+        public void run(string code)
+        {
+            process(code);
+            int state = 0;
+            while (state != 2)
             {
-                halt = execute_line_of_code();
+                state = execute_line_of_code();
             }
         }
 
-        public bool execute_line_of_code()
+        public int execute_line_of_code()
         {
             int address = 0;
-            bool halt = false;
+            int state = 0;
             for (int i = 0; i < 7; i++)
             {
                 address += (int)Math.Pow(2, 6 - i) * Convert.ToInt32(CAR[i]);
@@ -1018,7 +1022,8 @@ namespace Mano_simulator
                         WRITE();
                         break;
                     case "READ":
-                        halt = READ();
+                        state = 1;
+                        state += Convert.ToInt32(READ());
                         break;
                     case "SUB":
                         SUB();
@@ -1127,7 +1132,7 @@ namespace Mano_simulator
                 INCCAR();
             }
 
-            return halt;
+            return state;
         }
 
         public bool IsACZero()

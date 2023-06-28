@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,7 +25,10 @@ namespace Mano_simulator
         Assembly assembly = new Assembly();
         int line = 1;
         int line1 = 0;
-
+        string main_code = "";
+        string microprogram_code = "";
+        int ORG;
+        bool HLT = false;
         public MainWindow()
         {
             WindowState = WindowState.Maximized;
@@ -58,24 +62,27 @@ namespace Mano_simulator
         }
         private void btnRun_Click(object sender, RoutedEventArgs e)
         {
-            string program = new TextRange(txtProgrammMemmory.Document.ContentStart, txtProgrammMemmory.Document.ContentEnd).Text;
             try
             {
-                assembly.run(program);
+                assembly.run(main_code);
             }catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
             
             update_data_grid();
-            lblACvalue.Content =booleanArrayToString(assembly.AC);
+            update_registers();
+        }
+
+        private void update_registers()
+        {
+            lblACvalue.Content = booleanArrayToString(assembly.AC);
             lblARvalue.Content = booleanArrayToString(assembly.AR);
             lblCARvalue.Content = booleanArrayToString(assembly.CAR);
             lblDRvalue.Content = booleanArrayToString(assembly.DR);
             lblSBRvalue.Content = booleanArrayToString(assembly.SBR);
             lblPCvalue.Content = booleanArrayToString(assembly.PC);
         }
-
         private string booleanArrayToString(bool[] array)
         {
             string result = "";
@@ -103,12 +110,28 @@ namespace Mano_simulator
                 row.Background = Brushes.Yellow;
             }
         }
-
         private void btnStepover_Click(object sender, RoutedEventArgs e)
         {
+            int state;
+            state = assembly.execute_line_of_code();
+            if(state == 2)
+            {
+                HLT = true;
+            }
+            if(!HLT)
+                highlightOneLine(state);
+            int address = 0;
+            for (int i = 0; i < 11; i++)
+            {
+                address += Convert.ToInt32(assembly.PC[i]) * (int)Math.Pow(2, 10-i); 
+            }
+            HighlightRow(address);
+            update_registers();
+        }
 
-            HighlightRow(2);
-            string[] code= new TextRange(txtProgramm.Document.ContentStart, txtProgramm.Document.ContentEnd).Text.Split("\n");
+        private void highlightOneLine(int state)
+        {
+            string[] code = main_code.Split("\n");
             int start = 0;
             int end = 0;
             int start1 = 0;
@@ -125,17 +148,17 @@ namespace Mano_simulator
 
             for (int i = 0; i < line; i++)
             {
-                if (i<line-1)
+                if (i < line - 1)
                 {
                     start = start + code[i].Length + 3;
                 }
                 else
-                    end = start + code[i].Length+1;
+                    end = start + code[i].Length + 1;
             }
             HighlightRow1(start, end);
             HighlightRow2(start1, end1);
-            line++;
-            line1++;
+            line+=state;
+            line1+=state;
         }
 
         private void update_data_grid()
@@ -161,7 +184,7 @@ namespace Mano_simulator
                     Convert.ToInt32(assembly.memory[i, 13]).ToString() + " " +
                     Convert.ToInt32(assembly.memory[i, 14]).ToString() + " " +
                     Convert.ToInt32(assembly.memory[i, 15]).ToString();
-
+                Datamemmory.Items[i] = data;
             }
 
             // update the microprogram data grid
@@ -181,28 +204,27 @@ namespace Mano_simulator
 
             }
         }
-
         private void btnComile_Click(object sender, RoutedEventArgs e)
         {
             assembly.initializations();
             btnRun.Visibility = Visibility.Visible;
-            string program = new TextRange(txtProgrammMemmory.Document.ContentStart, txtProgrammMemmory.Document.ContentEnd).Text;
+            microprogram_code = new TextRange(txtProgrammMemmory.Document.ContentStart, txtProgrammMemmory.Document.ContentEnd).Text;
             try
             {
-                assembly.microprogram_first_iteration(program);
-                assembly.microprogram_second_iteration(program);
+                assembly.microprogram_first_iteration(microprogram_code);
+                assembly.microprogram_second_iteration(microprogram_code);
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
-            string program2 = new TextRange(txtProgramm.Document.ContentStart, txtProgramm.Document.ContentEnd).Text;
+            main_code = new TextRange(txtProgramm.Document.ContentStart, txtProgramm.Document.ContentEnd).Text;
 
             try
             {
-                assembly.first_iteration(program2);
-                assembly.second_iteration(program2);
+                assembly.first_iteration(main_code);
+                assembly.second_iteration(main_code);
             }
             catch(Exception ex)
             {
@@ -214,7 +236,6 @@ namespace Mano_simulator
             update_data_grid();
 
         }
-
         private void HighlightRow1(int startOffset, int endOffset)
         {
             // Get the current selection from the RichTextBox
@@ -245,12 +266,24 @@ namespace Mano_simulator
             // Apply formatting to the TextRange
             range.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.White);
         }
-
-
         private void btnDebug_Click(object sender, RoutedEventArgs e)
         {
+            microprogram_code = new TextRange(txtProgrammMemmory.Document.ContentStart, txtProgrammMemmory.Document.ContentEnd).Text;
+            main_code = new TextRange(txtProgramm.Document.ContentStart, txtProgramm.Document.ContentEnd).Text;
+
             btnStepover.Visibility = Visibility.Visible;
             btnStop.Visibility = Visibility.Visible;
+            try
+            {
+                ORG = assembly.process(main_code);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            highlightOneLine(1);
+
         }
     }
 
