@@ -59,10 +59,24 @@ namespace Mano_simulator
             
             
         }
+        private void HighlightRow(int rowIndex)
+        {
+            if (rowIndex >= 0 && rowIndex < Datamemmory.Items.Count)
+            {
+                // Get the row container for the specified index
+                DataGridRow row = (DataGridRow)Datamemmory.ItemContainerGenerator.ContainerFromIndex(rowIndex);
+
+                // Set the background color of the row
+                row.Background = Brushes.Yellow;
+            }
+        }
 
         private void btnStepover_Click(object sender, RoutedEventArgs e)
         {
-            
+
+            HighlightRow(2);
+
+            HighlightRow1(10, 24);
         }
 
         private void btnComile_Click(object sender, RoutedEventArgs e)
@@ -99,8 +113,6 @@ namespace Mano_simulator
                     Convert.ToInt32(assembly.memory[i, 14]).ToString() + " " +
                     Convert.ToInt32(assembly.memory[i, 15]).ToString();
 
-                Datamemmory.Items[i] = data;
-
             }
 
             // update the microprogram data grid
@@ -122,6 +134,23 @@ namespace Mano_simulator
 
         }
 
+        private void HighlightRow1(int startOffset, int endOffset)
+        {
+            // Get the current selection from the RichTextBox
+            TextSelection selection = txtProgramm.Selection;
+
+            // Set the start and end positions for highlighting
+            TextPointer start = txtProgramm.Document.ContentStart.GetPositionAtOffset(startOffset);
+            TextPointer end = txtProgramm.Document.ContentStart.GetPositionAtOffset(endOffset);
+
+            // Create a TextRange from the start and end positions
+            TextRange range = new TextRange(start, end);
+
+            // Apply formatting to the TextRange
+            range.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.Yellow);
+        }
+
+       
         private void btnDebug_Click(object sender, RoutedEventArgs e)
         {
             btnStepover.Visibility = Visibility.Visible;
