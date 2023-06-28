@@ -114,7 +114,7 @@ namespace Mano_simulator
         {
             int state;
             state = assembly.execute_line_of_code();
-            if(state == 2)
+            if (main_code.Split('\n')[line1].Split(' ')[0].Trim() == "HLT")
             {
                 HLT = true;
             }
