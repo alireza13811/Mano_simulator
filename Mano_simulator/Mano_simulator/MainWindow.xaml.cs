@@ -181,6 +181,27 @@ namespace Mano_simulator
             line1+=state;
         }
 
+        private void highlightOneLineMic(int line)
+        {
+            string[] code =microprogram_code.Split("\n");
+            int start = 0;
+            int end = 0;
+            int start1 = 0;
+            int end1 = microprogram_code.Length;
+
+            for (int i = 0; i < line; i++)
+            {
+                if (i < line - 1)
+                {
+                    start = start + code[i].Length + 3;
+                }
+                else
+                    end = start + code[i].Length + 1;
+            }
+            HighlightRow4(start1, end1);
+            HighlightRow3(start, end);
+        }
+
         private void update_data_grid()
         {
             for (int i = 0; i < 2048; i++)
@@ -279,6 +300,36 @@ namespace Mano_simulator
             // Set the start and end positions for highlighting
             TextPointer start = txtProgramm.Document.ContentStart.GetPositionAtOffset(startOffset);
             TextPointer end = txtProgramm.Document.ContentStart.GetPositionAtOffset(endOffset);
+
+            // Create a TextRange from the start and end positions
+            TextRange range = new TextRange(start, end);
+
+            // Apply formatting to the TextRange
+            range.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.White);
+        }
+        private void HighlightRow3(int startOffset, int endOffset)
+        {
+            // Get the current selection from the RichTextBox
+            TextSelection selection = txtProgrammMemmory.Selection;
+
+            // Set the start and end positions for highlighting
+            TextPointer start = txtProgrammMemmory.Document.ContentStart.GetPositionAtOffset(startOffset);
+            TextPointer end = txtProgrammMemmory.Document.ContentStart.GetPositionAtOffset(endOffset);
+
+            // Create a TextRange from the start and end positions
+            TextRange range = new TextRange(start, end);
+
+            // Apply formatting to the TextRange
+            range.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.White);
+        }
+        private void HighlightRow4(int startOffset, int endOffset)
+        {
+            // Get the current selection from the RichTextBox
+            TextSelection selection = txtProgrammMemmory.Selection;
+
+            // Set the start and end positions for highlighting
+            TextPointer start = txtProgrammMemmory.Document.ContentStart.GetPositionAtOffset(startOffset);
+            TextPointer end = txtProgrammMemmory.Document.ContentStart.GetPositionAtOffset(endOffset);
 
             // Create a TextRange from the start and end positions
             TextRange range = new TextRange(start, end);
