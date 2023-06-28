@@ -22,6 +22,8 @@ namespace Mano_simulator
     public partial class MainWindow : Window
     {
         Assembly assembly = new Assembly();
+        int line = 1;
+        int line1 = 0;
 
         public MainWindow()
         {
@@ -30,7 +32,7 @@ namespace Mano_simulator
             InitializeComponent();
 
             WindowState = WindowState.Maximized;
-           
+            
 
             // create a for loop to add rows to data grid
             for (int i = 0; i < 2048; i++)
@@ -75,8 +77,34 @@ namespace Mano_simulator
         {
 
             HighlightRow(2);
+            string[] code= new TextRange(txtProgramm.Document.ContentStart, txtProgramm.Document.ContentEnd).Text.Split("\n");
+            int start = 0;
+            int end = 0;
+            int start1 = 0;
+            int end1 = 0;
+            for (int i = 0; i < line1; i++)
+            {
+                if (i < line1 - 1)
+                {
+                    start1 = start1 + code[i].Length + 3;
+                }
+                else
+                    end1 = start1 + code[i].Length + 1;
+            }
 
-            HighlightRow1(10, 24);
+            for (int i = 0; i < line; i++)
+            {
+                if (i<line-1)
+                {
+                    start = start + code[i].Length + 3;
+                }
+                else
+                    end = start + code[i].Length+1;
+            }
+            HighlightRow1(start, end);
+            HighlightRow2(start1, end1);
+            line++;
+            line1++;
         }
 
         private void btnComile_Click(object sender, RoutedEventArgs e)
@@ -149,8 +177,23 @@ namespace Mano_simulator
             // Apply formatting to the TextRange
             range.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.Yellow);
         }
+        private void HighlightRow2(int startOffset, int endOffset)
+        {
+            // Get the current selection from the RichTextBox
+            TextSelection selection = txtProgramm.Selection;
 
-       
+            // Set the start and end positions for highlighting
+            TextPointer start = txtProgramm.Document.ContentStart.GetPositionAtOffset(startOffset);
+            TextPointer end = txtProgramm.Document.ContentStart.GetPositionAtOffset(endOffset);
+
+            // Create a TextRange from the start and end positions
+            TextRange range = new TextRange(start, end);
+
+            // Apply formatting to the TextRange
+            range.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.White);
+        }
+
+
         private void btnDebug_Click(object sender, RoutedEventArgs e)
         {
             btnStepover.Visibility = Visibility.Visible;
