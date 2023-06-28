@@ -58,8 +58,39 @@ namespace Mano_simulator
         }
         private void btnRun_Click(object sender, RoutedEventArgs e)
         {
+            string program = new TextRange(txtProgrammMemmory.Document.ContentStart, txtProgrammMemmory.Document.ContentEnd).Text;
+            try
+            {
+                assembly.run(program);
+            }catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             
-            
+            update_data_grid();
+            lblACvalue.Content =booleanArrayToString(assembly.AC);
+            lblARvalue.Content = booleanArrayToString(assembly.AR);
+            lblCARvalue.Content = booleanArrayToString(assembly.CAR);
+            lblDRvalue.Content = booleanArrayToString(assembly.DR);
+            lblSBRvalue.Content = booleanArrayToString(assembly.SBR);
+            lblPCvalue.Content = booleanArrayToString(assembly.PC);
+        }
+
+        private string booleanArrayToString(bool[] array)
+        {
+            string result = "";
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i])
+                {
+                    result += "1";
+                }
+                else
+                {
+                    result += "0";
+                }
+            }
+            return result;
         }
         private void HighlightRow(int rowIndex)
         {
@@ -107,18 +138,8 @@ namespace Mano_simulator
             line1++;
         }
 
-        private void btnComile_Click(object sender, RoutedEventArgs e)
+        private void update_data_grid()
         {
-            btnRun.Visibility = Visibility.Visible;
-            string program = new TextRange(txtProgrammMemmory.Document.ContentStart, txtProgrammMemmory.Document.ContentEnd).Text;
-            assembly.microprogram_first_iteration(program);
-            assembly.microprogram_second_iteration(program);
-
-            string program2 = new TextRange(txtProgramm.Document.ContentStart, txtProgramm.Document.ContentEnd).Text;
-            assembly.first_iteration(program2);
-            assembly.second_iteration(program2);
-
-            // update the data grid
             for (int i = 0; i < 2048; i++)
             {
                 DataGridData data = new DataGridData();
@@ -159,6 +180,38 @@ namespace Mano_simulator
                 Microprogrammemmory.Items[i] = data;
 
             }
+        }
+
+        private void btnComile_Click(object sender, RoutedEventArgs e)
+        {
+            assembly.initializations();
+            btnRun.Visibility = Visibility.Visible;
+            string program = new TextRange(txtProgrammMemmory.Document.ContentStart, txtProgrammMemmory.Document.ContentEnd).Text;
+            try
+            {
+                assembly.microprogram_first_iteration(program);
+                assembly.microprogram_second_iteration(program);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            string program2 = new TextRange(txtProgramm.Document.ContentStart, txtProgramm.Document.ContentEnd).Text;
+
+            try
+            {
+                assembly.first_iteration(program2);
+                assembly.second_iteration(program2);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+
+            // update the data grid
+            update_data_grid();
 
         }
 

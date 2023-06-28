@@ -12,23 +12,17 @@ namespace Mano_simulator
     {
         // Main
         public bool[,] memory = new bool[2096, 16];
-        bool[] AR = new bool[11];
-        bool[] PC = new bool[11];
-        bool[] DR = new bool[16];
-        bool[] AC = new bool[16];
+        public bool[] AR = new bool[11];
+        public bool[] PC = new bool[11];
+        public bool[] DR = new bool[16];
+        public bool[] AC = new bool[16];
 
         IDictionary<string, int> labelAddressTable = new Dictionary<string, int>();
 
         // Microprogram
         public string[,] controlMemory = new string[128, 6];
-        bool[] CAR = new bool[7];
-        bool[] SBR = new bool[7];
-        bool[] F1 = new bool[3];
-        bool[] F2 = new bool[3];
-        bool[] F3 = new bool[3];
-        bool[] CD = new bool[2];
-        bool[] BR = new bool[2];
-        bool[] AD = new bool[7];
+        public bool[] CAR = new bool[7];
+        public bool[] SBR = new bool[7];
 
         IDictionary<string, int> microprogramLabels = new Dictionary<string, int>();
         
@@ -43,6 +37,11 @@ namespace Mano_simulator
         public bool[] SBR1 { get => SBR; set => SBR = value; }
 
         public Assembly()
+        {
+            initializations();
+        }
+
+        public void initializations()
         {
             // Main
             for (int i = 0; i < 2096; i++)
@@ -64,18 +63,18 @@ namespace Mano_simulator
             }
 
             // Microprogram
-            /*for (int i = 0; i < 128; i++)
+            for (int i = 0; i < 128; i++)
             {
-                for (int j = 0; j < 20; j++)
+                for (int j = 0; j < 6; j++)
                 {
-                    ControlMemory[i, j] = false;
+                    ControlMemory[i, j] = "";
                 }
             }
             for (int i = 0; i < 7; i++)
             {
                 CAR[i] = false;
                 SBR[i] = false;
-            }*/
+            }
         }
 
         public void LoadMemory(int LC, string line)
@@ -333,7 +332,7 @@ namespace Mano_simulator
         public bool READ()
         {
             int address = 0;
-            bool flag = false;
+            bool flag = true;
             for (int i = 0; i < 11; i++)
             {
                 if (AR[i])
@@ -344,9 +343,9 @@ namespace Mano_simulator
             for (int i = 0; i < 16; i++)
             {
                 DR[i] = Memory[address, i];
-                if (Memory[address, i])
+                if (!Memory[address, i])
                 {
-                    flag = true;
+                    flag = false;
                 }
             }
             return flag;
@@ -705,6 +704,10 @@ namespace Mano_simulator
             foreach(string lineOfCode in lines)
             {
                 symbol = lineOfCode.Split(' ')[0].Trim();
+                if(symbol == "")
+                {
+                    throw new Exception("Error: Invalid instruction");
+                }
                 if(symbol == "ORG")
                 {
                     LC = int.Parse(lineOfCode.Split(' ')[1]);
@@ -713,11 +716,14 @@ namespace Mano_simulator
                 else if(symbol == "HEX" || symbol == "DEC" || symbol == "BIN")
                 {
                     storing_label_in_memory(LC, lineOfCode.Trim());
+                    LC++;
                     continue;
                 }
                 else if(symbol == "HLT")
                 {
                     LoadMemory(LC, "1111111111111111");
+                    LC++;
+                    continue;
                 }
                 else if(symbol.Length > 2 && symbol.Substring(0, 3) == "END")
                 {
@@ -737,6 +743,7 @@ namespace Mano_simulator
                     {
                         Console.WriteLine("Error: Label not found");
                     }
+                    LC++;
                     continue;
                 }
                 word = "";
@@ -985,7 +992,7 @@ namespace Mano_simulator
             for (int i = 0; i < 3; i++)
             {
                 operation = microinstructions[i];
-                if (operation == "")
+                if (operation == "" || operation == null)
                     continue;
                 switch (operation)
                 {
@@ -1049,7 +1056,9 @@ namespace Mano_simulator
                     case "ARTPC":
                         ARTPC();
                         break;
-
+                    case "ADD":
+                        ADD();
+                        break;
                     default:
                         throw new ArgumentException("Invalid operation");
 
