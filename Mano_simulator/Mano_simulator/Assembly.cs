@@ -232,48 +232,19 @@ namespace Mano_simulator
 
         public void SUB()
         {
-            int carry = 0;
-            for (int i = 15; i >= 0; i--)
+            for (int i = 0; i < 16; i++)
             {
-                if (AC[i] && DR[i])
+                if (DR[i] == true)
                 {
-                    if (carry == 1)
-                    {
-                        AC[i] = false;
-                    }
-                    else
-                    {
-                        AC[i] = true;
-                    }
-                    carry = 0;
-                }
-                else if (AC[i] || DR[i])
-                {
-                    if (carry == 1)
-                    {
-                        AC[i] = true;
-                        carry = 0;
-                    }
-                    else
-                    {
-                        AC[i] = false;
-                        carry = 1;
-                    }
+                    DR[i] = false;
                 }
                 else
                 {
-                    if (carry == 1)
-                    {
-                        AC[i] = false;
-                        carry = 1;
-                    }
-                    else
-                    {
-                        AC[i] = true;
-                        carry = 0;
-                    }
+                    DR[i] = true;
                 }
             }
+            INCDR();
+            ADD();
         }
 
         public void CLRAC()
@@ -383,7 +354,17 @@ namespace Mano_simulator
 
         public void OR()
         {
-
+            for (int i = 0; i < 16; i++)
+            {
+                if (AC[i] || DR[i])
+                {
+                    AC[i] = true;
+                }
+                else
+                {
+                    AC[i] = false;
+                }
+            }
         }
 
         public void AND()

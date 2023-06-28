@@ -49,11 +49,25 @@ namespace Mano_simulator
                 Microprogrammemmory.Items.Add(data);
 
             }
+            btnRun.Visibility = Visibility.Hidden;
+            btnStepover.Visibility = Visibility.Hidden;
+            btnStop.Visibility = Visibility.Hidden;
 
         }
         private void btnRun_Click(object sender, RoutedEventArgs e)
         {
             
+            
+        }
+
+        private void btnStepover_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void btnComile_Click(object sender, RoutedEventArgs e)
+        {
+            btnRun.Visibility = Visibility.Visible;
             string program = new TextRange(txtProgrammMemmory.Document.ContentStart, txtProgrammMemmory.Document.ContentEnd).Text;
             assembly.microprogram_first_iteration(program);
             assembly.microprogram_second_iteration(program);
@@ -68,7 +82,7 @@ namespace Mano_simulator
                 DataGridData data = new DataGridData();
                 data.Address = "0x" + i.ToString("X");
                 // convert memory array to string of 16 bits
-                data.Value =Convert.ToInt32(assembly.memory[i,0]).ToString() + " " +
+                data.Value = Convert.ToInt32(assembly.memory[i, 0]).ToString() + " " +
                     Convert.ToInt32(assembly.memory[i, 1]).ToString() + " " +
                     Convert.ToInt32(assembly.memory[i, 2]).ToString() + " " +
                     Convert.ToInt32(assembly.memory[i, 3]).ToString() + " " +
@@ -96,7 +110,7 @@ namespace Mano_simulator
                 data.Address = "0x" + i.ToString("X");
                 // convert memory array to string of 16 bits
                 data.Value = assembly.controlMemory[i, 0] + " " +
-                    assembly.controlMemory[i, 1]+ " " +
+                    assembly.controlMemory[i, 1] + " " +
                     assembly.controlMemory[i, 2] + " " +
                     assembly.controlMemory[i, 3] + " " +
                     assembly.controlMemory[i, 4] + " " +
@@ -108,6 +122,11 @@ namespace Mano_simulator
 
         }
 
+        private void btnDebug_Click(object sender, RoutedEventArgs e)
+        {
+            btnStepover.Visibility = Visibility.Visible;
+            btnStop.Visibility = Visibility.Visible;
+        }
     }
 
     // create a classs that will hold the data for the data grid

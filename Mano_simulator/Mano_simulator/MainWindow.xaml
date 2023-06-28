@@ -20,7 +20,14 @@
             <RowDefinition Height="0.5*"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-            <Button x:Name="btnRun" Content="Run" Background="Aqua" Width="90" Margin="20" Height="25" Click="btnRun_Click" FontStyle="Italic" FontWeight="Bold" BorderBrush="DarkBlue" BorderThickness="2">
+            <Button x:Name="btnComile" Content="Compile" Background="Aqua" Width="90" Margin="20,20,5,20" Height="25" Click="btnComile_Click" FontStyle="Italic" FontWeight="Bold" BorderBrush="DarkBlue" BorderThickness="2">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="btnRun" Content="Run" Background="Aqua" Width="90" Margin="5,20,20,20" Height="25" Click="btnRun_Click" FontStyle="Italic" FontWeight="Bold" BorderBrush="DarkBlue" BorderThickness="2">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -30,7 +37,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-            <Button x:Name="btnDebug" Content="Debug" Width="90" Margin="5" Height="25" Background="Aqua" FontStyle="Italic" FontWeight="Bold" BorderBrush="DarkBlue" BorderThickness="2">
+            <Button x:Name="btnDebug" Content="Debug" Width="90" Margin="5" Height="25" Background="Aqua" FontStyle="Italic" FontWeight="Bold" BorderBrush="DarkBlue" BorderThickness="2" Click="btnDebug_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -49,7 +56,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="btnStepover" Content="Stepover" Background="Aqua" Width="90" Margin="5,5,5,5" Height="25" FontStyle="Italic" FontWeight="Bold" BorderBrush="DarkBlue" BorderThickness="2">
+            <Button x:Name="btnStepover" Content="Stepover" Background="Aqua" Width="90" Margin="5,5,5,5" Height="25" FontStyle="Italic" FontWeight="Bold" BorderBrush="DarkBlue" BorderThickness="2" Click="btnStepover_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -130,19 +137,19 @@
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" >
             <Border CornerRadius="5"  BorderThickness="2" BorderBrush="DarkBlue" Background="Aqua" Margin="60,0,0,0" >
-                <Label x:Name="lblARvalue" Content="0000000000" VerticalAlignment="Center" FontSize="20"    Padding="8,0,8,0"></Label>
+                <Label x:Name="lblARvalue" Content="00000000000" VerticalAlignment="Center" FontSize="20"    Padding="8,0,8,0"></Label>
             </Border>
             <Border Margin="51,0,0,0" Background="Aqua" CornerRadius="5"  BorderThickness="2" BorderBrush="DarkBlue">
-                <Label x:Name="lblCARvalue" Content="000000" HorizontalAlignment="Center" FontSize="20"  Padding="8,0,8,0" ></Label>
+                <Label x:Name="lblCARvalue" Content="0000000" HorizontalAlignment="Center" FontSize="20"  Padding="8,0,8,0" ></Label>
             </Border>
 
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="3" Orientation="Horizontal" >
             <Border CornerRadius="5"  BorderThickness="2" BorderBrush="DarkBlue" Background="Aqua" Margin="60,0,0,0" >
-                <Label x:Name="lblPCvalue" Content="0000000000" VerticalAlignment="Center" FontSize="20"    Padding="8,0,8,0"></Label>
+                <Label x:Name="lblPCvalue" Content="00000000000" VerticalAlignment="Center" FontSize="20"    Padding="8,0,8,0"></Label>
             </Border>
             <Border Margin="51,0,0,0" Background="Aqua" CornerRadius="5"  BorderThickness="2" BorderBrush="DarkBlue">
-                <Label x:Name="lblSBRvalue" Content="000000" HorizontalAlignment="Center" FontSize="20"  Padding="8,0,8,0" ></Label>
+                <Label x:Name="lblSBRvalue" Content="0000000" HorizontalAlignment="Center" FontSize="20"  Padding="8,0,8,0" ></Label>
             </Border>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal">
