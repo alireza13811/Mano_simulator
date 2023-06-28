@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Shapes;
 
 namespace Mano_simulator
 {
@@ -78,24 +78,18 @@ namespace Mano_simulator
             }*/
         }
 
-        public void LoadMemory(string[] lines)
+        public void LoadMemory(int LC, string line)
         {
-            int i = 0;
-            foreach (string line in lines)
+            for (int i = 0; i < 16; i++)
             {
-                string[] words = line.Split(' ');
-                for (int j = 0; j < 16; j++)
+                if (line[i] == '1')
                 {
-                    if (words[1][j] == '1')
-                    {
-                        Memory[i, j] = true;
-                    }
-                    else
-                    {
-                        Memory[i, j] = false;
-                    }
+                    Memory[LC, i] = true;
                 }
-                i++;
+                else
+                {
+                    Memory[LC, i] = false;
+                }
             }
         }
 
@@ -114,11 +108,11 @@ namespace Mano_simulator
             }
         }
 
-        public void LoadPC(string[] words)
+        public void LoadPC(string words)
         {
             for (int i = 0; i < 11; i++)
             {
-                if (words[1][i] == '1')
+                if (words[1] == '1')
                 {
                     PC[i] = true;
                 }
@@ -365,9 +359,10 @@ namespace Mano_simulator
 
         }
 
-        public void READ()
+        public bool READ()
         {
             int address = 0;
+            bool flag = false;
             for (int i = 0; i < 11; i++)
             {
                 if (AR[i])
@@ -378,7 +373,12 @@ namespace Mano_simulator
             for (int i = 0; i < 16; i++)
             {
                 DR[i] = Memory[address, i];
+                if (Memory[address, i])
+                {
+                    flag = true;
+                }
             }
+            return flag;
         }
 
         public void OR()
@@ -667,10 +667,13 @@ namespace Mano_simulator
 
         public void MAP()
         {
-            for (int i = 2; i < 6; i++)
+            for (int i = 1; i < 5; i++)
             {
-
+                CAR[i] = DR[i];
             }
+            CAR[0] = false;
+            CAR[5] = false;
+            CAR[6] = false;
         }
 
         // functions to compile the assembly code
@@ -731,6 +734,10 @@ namespace Mano_simulator
                     storing_label_in_memory(LC, lineOfCode.Trim());
                     continue;
                 }
+                else if(symbol == "HLT")
+                {
+                    LoadMemory(LC, "1111111111111111");
+                }
                 else if(symbol.Length > 2 && symbol.Substring(0, 3) == "END")
                 {
                     break;
@@ -779,19 +786,7 @@ namespace Mano_simulator
                 }
                 word += binary;
 
-            
-                for(int i=0; i<16; i++)
-                {
-                    if (word[i] == '0')
-                    {
-                        memory[LC, i] = false;
-                    }
-                    else
-                    {
-                        memory[LC, i] = true;
-                    }
-                }
-
+                LoadMemory(LC, word);
 
                 LC++;
             }
@@ -955,22 +950,45 @@ namespace Mano_simulator
             }
         }
 
-        public void run()
+        public void run(string code)
         {
+            string[] lines = code.Split('\n');
+            string pc = "";
+            foreach(string line in lines)
+            {
+                if(line.Split(' ')[0] == "ORG")
+                {
+                    pc = line.Split(' ')[1];
+                }
+            }
+            int dec = int.Parse(pc, System.Globalization.NumberStyles.HexNumber);
+            string binary = Convert.ToString(dec, 2);
+            while (binary.Length < 11)
+            {
+                binary = "0" + binary;
+            }
+            LoadPC(binary);
+
             int address = microprogramLabels["FETCH"];
             // convert address to binary string
-            string binary = Convert.ToString(address, 2);
+            binary = Convert.ToString(address, 2);
             while (binary.Length < 4)
             {
                 binary = "0" + binary;
             }
             LoadCAR(binary);
 
+            bool halt = false;
+            while (!halt)
+            {
+                halt = execute_line_of_code();
+            }
         }
 
-        public void execute_line_of_code()
+        public bool execute_line_of_code()
         {
             int address = 0;
+            bool halt = false;
             for (int i = 0; i < 7; i++)
             {
                 address += (int)Math.Pow(2, 6 - i) * Convert.ToInt32(CAR[i]);
@@ -993,9 +1011,6 @@ namespace Mano_simulator
                     case "NOP":
                         NOP();
                         break;
-                    case "JMP":
-                        JUMP();
-                        break;
                     case "CLRAC":
                         CLRAC();
                         break;
@@ -1015,7 +1030,7 @@ namespace Mano_simulator
                         WRITE();
                         break;
                     case "READ":
-                        READ();
+                        halt = READ();
                         break;
                     case "SUB":
                         SUB();
@@ -1112,12 +1127,17 @@ namespace Mano_simulator
                             MAP();
                             break;
                         }
-                     
+                    default:
+                        throw new ArgumentException("Invalid branch");
 
                 }
             }
+            else
+            {
+                INCCAR();
+            }
 
-            
+            return halt;
         }
 
         public bool IsACZero()
