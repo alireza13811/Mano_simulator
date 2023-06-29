@@ -27,6 +27,7 @@ namespace Mano_simulator
         int line1 = 0;
         string main_code = "";
         string microprogram_code = "";
+        
         int ORG;
         bool HLT = false;
         public MainWindow()
@@ -58,6 +59,7 @@ namespace Mano_simulator
             btnRun.Visibility = Visibility.Hidden;
             btnStepover.Visibility = Visibility.Hidden;
             btnStop.Visibility = Visibility.Hidden;
+            btnDebug.Visibility = Visibility.Hidden;
 
         }
         private void btnRun_Click(object sender, RoutedEventArgs e)
@@ -355,6 +357,28 @@ namespace Mano_simulator
 
             highlightOneLine(1);
 
+        }
+
+        private void btnStop_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < 2048; i++)
+            {
+                DataGridData data = new DataGridData();
+                data.Address = "0x" + i.ToString("X");
+                data.Value = "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
+                Datamemmory.Items.Add(data);
+
+            }
+            for (int i = 0; i < 128; i++)
+            {
+                DataGridData data = new DataGridData();
+                data.Address = "0x" + i.ToString("X");
+                data.Value = "";
+                Microprogrammemmory.Items.Add(data);
+
+            }
+            btnDebug.Visibility = Visibility.Hidden;
+            btnRun.Visibility = Visibility.Hidden;
         }
     }
 
