@@ -248,6 +248,7 @@ namespace Mano_simulator
         {
             assembly.initializations();
             btnRun.Visibility = Visibility.Visible;
+            btnDebug.Visibility = Visibility.Visible;
             microprogram_code = new TextRange(txtProgrammMemmory.Document.ContentStart, txtProgrammMemmory.Document.ContentEnd).Text;
             try
             {
@@ -376,6 +377,15 @@ namespace Mano_simulator
             }
             btnDebug.Visibility = Visibility.Hidden;
             btnRun.Visibility = Visibility.Hidden;
+            line = 1;
+            line1 = 0;
+            HighlightRow2(0, main_code.Length);
+            HighlightRow4(0, microprogram_code.Length);
+            microprogram_code = "";
+            main_code = "";
+            HLT = false;
+            address = 0;
+            assembly.initializations();
         }
     }
 
