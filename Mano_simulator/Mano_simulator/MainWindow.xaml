@@ -44,8 +44,8 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Border Margin="5,5,5,5" CornerRadius="3"  BorderThickness="2" BorderBrush="DarkBlue" Width="80" Height="25"  >
-                <TextBox FontSize="14" FontStyle="Italic"  FontWeight="Bold"></TextBox>
+            <Border x:Name="txtDebug" Margin="5,5,5,5" CornerRadius="3"  BorderThickness="2" BorderBrush="DarkBlue" Width="80" Height="25"  >
+                <TextBox x:Name="txtLine" FontSize="14" FontStyle="Italic"  FontWeight="Bold"></TextBox>
             </Border>
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">

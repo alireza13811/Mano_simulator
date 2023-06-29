@@ -61,10 +61,11 @@ namespace Mano_simulator
             btnStepover.Visibility = Visibility.Hidden;
             btnStop.Visibility = Visibility.Hidden;
             btnDebug.Visibility = Visibility.Hidden;
-
+            txtDebug.Visibility = Visibility.Hidden;
         }
         private void btnRun_Click(object sender, RoutedEventArgs e)
         {
+            btnStop.Visibility = Visibility.Visible;
             try
             {
                 assembly.run(main_code, "");
@@ -102,29 +103,6 @@ namespace Mano_simulator
             }
             return result;
         }
-        private void HighlightRowDatamemmory(int rowIndex)
-        {
-            if (rowIndex >= 0 && rowIndex < Datamemmory.Items.Count)
-            {
-                // Get the row container for the specified index
-                DataGridRow row = (DataGridRow)Datamemmory.ItemContainerGenerator.ContainerFromIndex(rowIndex);
-
-                // Set the background color of the row
-                row.Background = Brushes.Yellow;
-            }
-        }
-
-        private void HighlightRowMictoprogrammemmory(int rowIndex)
-        {
-            if (rowIndex >= 0 && rowIndex < Microprogrammemmory.Items.Count)
-            {
-                // Get the row container for the specified index
-                DataGridRow row = (DataGridRow)Microprogrammemmory.ItemContainerGenerator.ContainerFromIndex(rowIndex);
-
-                // Set the background color of the row
-                row.Background = Brushes.Yellow;
-            }
-        }
         private void btnStepover_Click(object sender, RoutedEventArgs e)
         {
             int state=0;
@@ -135,6 +113,10 @@ namespace Mano_simulator
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                btnDebug.Visibility = Visibility.Hidden;
+                btnStepover.Visibility = Visibility.Hidden;
+                txtDebug.Visibility = Visibility.Hidden;
+                btnRun.Visibility = Visibility.Hidden;
             }
             if (main_code.Split('\n')[line1].Split(' ')[0].Trim() == "HLT")
             {
@@ -146,6 +128,7 @@ namespace Mano_simulator
             highlightOneLineMic(address+1);
 
             update_registers();
+            update_data_grid();
         }
 
         private void highlightOneLine(int state)
@@ -249,6 +232,7 @@ namespace Mano_simulator
             assembly.initializations();
             btnRun.Visibility = Visibility.Visible;
             btnDebug.Visibility = Visibility.Visible;
+            txtDebug.Visibility = Visibility.Visible;
             microprogram_code = new TextRange(txtProgrammMemmory.Document.ContentStart, txtProgrammMemmory.Document.ContentEnd).Text;
             try
             {
@@ -353,39 +337,53 @@ namespace Mano_simulator
                 MessageBox.Show(ex.Message);
             }
 
-            highlightOneLine(1);
+            int line2 = 1;
+            try
+            {
+                line2 = Convert.ToInt32(txtLine.Text);
+            }catch(Exception ex)
+            {
+                line2 = 1;
+            }
+            
+            line = line2;
+            line1 = line2-1;
+            int state = 0;
+            for (int i = 0; i < line1; i++)
+            {
+                try
+                {
+                    state = assembly.execute_line_of_code(ref address, microprogram_code);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            
+            highlightOneLine(state);
+            update_data_grid();
+            update_registers();
 
         }
-
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < 2048; i++)
-            {
-                DataGridData data = new DataGridData();
-                data.Address = "0x" + i.ToString("X");
-                data.Value = "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
-                Datamemmory.Items.Add(data);
-
-            }
-            for (int i = 0; i < 128; i++)
-            {
-                DataGridData data = new DataGridData();
-                data.Address = "0x" + i.ToString("X");
-                data.Value = "";
-                Microprogrammemmory.Items.Add(data);
-
-            }
             btnDebug.Visibility = Visibility.Hidden;
             btnRun.Visibility = Visibility.Hidden;
+            btnStepover.Visibility = Visibility.Hidden;
+            txtDebug.Visibility = Visibility.Hidden;
+            btnStop.Visibility = Visibility.Hidden;
             line = 1;
             line1 = 0;
             HighlightRow2(0, main_code.Length);
-            HighlightRow4(0, microprogram_code.Length);
+            HighlightRow4(0, microprogram_code.Length+30);
             microprogram_code = "";
             main_code = "";
             HLT = false;
             address = 0;
             assembly.initializations();
+            update_data_grid();
+            update_registers();
         }
     }
 

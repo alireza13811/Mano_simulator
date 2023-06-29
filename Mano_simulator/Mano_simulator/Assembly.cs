@@ -76,6 +76,8 @@ namespace Mano_simulator
                 CAR[i] = false;
                 SBR[i] = false;
             }
+            microprogramLabels.Clear();
+            labelAddressTable.Clear();
         }
 
         public void LoadMemory(int LC, string line)
@@ -1042,8 +1044,7 @@ namespace Mano_simulator
                         WRITE();
                         break;
                     case "READ":
-                        state = 1;
-                        state += Convert.ToInt32(READ());
+                        state = READ() ?  2 : 0;
                         break;
                     case "SUB":
                         SUB();
@@ -1121,6 +1122,8 @@ namespace Mano_simulator
                             }
                             else
                             {
+                                if (dest == "FETCH")
+                                    state = 1;
                                 JUMP(dest);
                             }
                             break;
