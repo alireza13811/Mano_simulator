@@ -29,6 +29,7 @@ namespace Mano_simulator
         string microprogram_code = "";
         int ORG;
         bool HLT = false;
+        int address = 0;
         public MainWindow()
         {
             WindowState = WindowState.Maximized;
@@ -64,7 +65,7 @@ namespace Mano_simulator
         {
             try
             {
-                assembly.run(main_code);
+                assembly.run(main_code, "");
             }catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -124,27 +125,23 @@ namespace Mano_simulator
         }
         private void btnStepover_Click(object sender, RoutedEventArgs e)
         {
-            int state;
-            state = assembly.execute_line_of_code();
+            int state=0;
+            try
+            {
+                state = assembly.execute_line_of_code(ref address, microprogram_code);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             if (main_code.Split('\n')[line1].Split(' ')[0].Trim() == "HLT")
             {
                 HLT = true;
             }
             if(!HLT)
                 highlightOneLine(state);
-            int address = 0;
-            for (int i = 0; i < 11; i++)
-            {
-                address += Convert.ToInt32(assembly.PC[i]) * (int)Math.Pow(2, 10-i); 
-            }
-            HighlightRowDatamemmory(address);
 
-            address = 0;
-            for (int i = 0; i < 7; i++)
-            {
-                address += Convert.ToInt32(assembly.CAR[i]) * (int)Math.Pow(2, 6 - i);
-            }
-            HighlightRowMictoprogrammemmory(address);
+            highlightOneLineMic(address+1);
 
             update_registers();
         }
@@ -320,7 +317,7 @@ namespace Mano_simulator
             TextRange range = new TextRange(start, end);
 
             // Apply formatting to the TextRange
-            range.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.White);
+            range.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.Yellow);
         }
         private void HighlightRow4(int startOffset, int endOffset)
         {

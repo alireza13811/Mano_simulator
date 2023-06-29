@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Shapes;
 
 namespace Mano_simulator
@@ -967,29 +968,48 @@ namespace Mano_simulator
             LoadCAR(binary);
             return dec;
         }
-        public void run(string code)
+        public void run(string code, string micro_code)
         {
             process(code);
-            int state = 0;
+            int state = 0, address = 0;
             while (state != 2)
             {
-                state = execute_line_of_code();
+                state = execute_line_of_code(ref address, "");
             }
         }
 
-        public int execute_line_of_code()
+        public int execute_line_of_code(ref int address, string micro_code)
         {
-            int address = 0;
+            int address2 = 0;
             int state = 0;
             for (int i = 0; i < 7; i++)
             {
-                address += (int)Math.Pow(2, 6 - i) * Convert.ToInt32(CAR[i]);
+                address2 += (int)Math.Pow(2, 6 - i) * Convert.ToInt32(CAR[i]);
             }
 
             string[] microinstructions = new string[6];
             for (int i = 0; i < 6; i++)
             {
-                microinstructions[i] = controlMemory[address, i]; 
+                microinstructions[i] = controlMemory[address2, i]; 
+            }
+            string symbol = microprogramLabels.FirstOrDefault(x => x.Value == address2).Key;
+            string[] lines = micro_code.Split('\n');
+            int counter = 0;
+            bool flag1 = false;
+
+            foreach (string line in lines)
+            {
+                if (line.Split(':')[0] == symbol)
+                {
+                    address = counter;
+                    flag1 = true;
+                    break;
+                }
+                counter++;
+            }
+            if (!flag1)
+            {
+                address++;
             }
 
             string operation;
